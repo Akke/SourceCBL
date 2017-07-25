@@ -1,0 +1,19 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"1.2"
+		}
+		
+		"Notes"	"See www.steamcommunity.com/groups/SourceCBL for changelogs"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/sourcecbl.smx"
+		
+		"Source"	"Path_SM/scripting/sourcecbl.sp"
+	}
+}
