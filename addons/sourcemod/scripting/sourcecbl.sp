@@ -456,7 +456,7 @@ public int PanelHandler1(Menu menu, MenuAction action, int param1, int param2)
 				return;
 			}
 
-			PrintToChat(param1, "\x04[SpecWho]\x05 SteamID32 of %N is %s", iSpecTarget[param1], TargetSteam32[iSpecTarget[param1]]);
+			PrintToChat(param1, "\x04[SourceCBL]\x05 SteamID32 of %N is %s", iSpecTarget[param1], TargetSteam32[iSpecTarget[param1]]);
 		}
 	}
 
