@@ -9,7 +9,6 @@
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/SirPurpleness/SourceCBL/master/updater.txt"
-#define SPECWHO_VERSION "1.1"
 #define SPECMODE_NONE 				0
 #define SPECMODE_FIRSTPERSON 		4
 #define SPECMODE_3RDPERSON 			5
@@ -41,12 +40,12 @@ public Plugin myinfo =
 	name = "SourceCBL",
 	author = "SomePanns",
 	description = "Allows communities to keep hackers/cheaters away from their servers by using a global database with stored information of hackers/cheaters.",
-	version = "1.2",
+	version = "1.2.1",
 }
 
 public void OnPluginStart()
 {
-	g_hCvarEnabled = CreateConVar("sm_scbl_enabled", "1", "1 = Enabled (default), 0 = disabled.");
+	g_hCvarEnabled = CreateConVar("sm_scbl_enabled", "1", "1 = Enabled (default), 0 = disabled.", FCVAR_NOTIFY);
 
 	HookConVarChange(g_hCvarEnabled, OnConVarChange);
 
@@ -456,7 +455,7 @@ public int PanelHandler1(Menu menu, MenuAction action, int param1, int param2)
 				return;
 			}
 
-			PrintToChat(param1, "\x04[SpecWho]\x05 SteamID32 of %N is %s", iSpecTarget[param1], TargetSteam32[iSpecTarget[param1]]);
+			PrintToChat(param1, "\x04[SourceCBL]\x05 SteamID32 of %N is %s", iSpecTarget[param1], TargetSteam32[iSpecTarget[param1]]);
 		}
 	}
 
