@@ -1,0 +1,7 @@
+"SCBL_Whitelist"
+{
+	//"1234" // steamid64
+	//{
+	//	"whitelist" "1" // 1 to whitelist, 0 to do nothing
+	//} 
+}
