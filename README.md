@@ -8,4 +8,4 @@ All bans in our database are submitted by community admins and our own staff, wh
 Our service is completely free, so what are you waiting for? Protect your servers in a few simple steps.
 
 # Help Pages
-See https://sirpurpleness.github.io/SourceCBL-Docs/ for more help and documentation.
+See https://help.sourcecbl.com/ for more help and documentation.
