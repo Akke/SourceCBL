@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"1.2.1"
+			"Latest"	"2.0"
 		}
 		
 		"Notes"	"See www.steamcommunity.com/groups/SourceCBL for changelogs"
