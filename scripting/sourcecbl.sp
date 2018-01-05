@@ -36,11 +36,13 @@ char TargetSteam32[MAXPLAYERS+1][255];
 
 ConVar g_hCvarEnabled;
 ConVar g_hCvarCurrentGameOnly;
+ConVar g_hCvarDisableAlt;
 
 bool IsEnabled = true;
 bool CurrentGameOnly = false;
 bool PlayerIsCheater[MAXPLAYERS+1] = false;
 bool HasSeenMOTD[MAXPLAYERS+1] = false;
+bool DisableAltBlock = false;
 
 int CurrentGameID = 0;
 
@@ -66,6 +68,7 @@ public void OnPluginStart()
 	
 	g_hCvarEnabled = CreateConVar("sm_scbl_enabled", "1", "Enable or disable SourceCBL. 1 = Enabled (default), 0 = disabled.", FCVAR_NOTIFY);
 	g_hCvarCurrentGameOnly = CreateConVar("sm_scbl_current_game_only", "0", "If set to 0 (default) then cheaters banned from any Source game will be kicked. If set to 1 then only cheaters banned from the current game the server is running are kicked.", FCVAR_NOTIFY);
+	g_hCvarDisableAlt = CreateConVar("sm_scbl_disable_altcheck", "0", "0 (default) blocks all alternate account detected from marked cheaters only. 1 will allow alternate accounts of marked cheaters to connect.", FCVAR_NOTIFY);
 	
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	
@@ -85,7 +88,7 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dB)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	if(!IsFakeClient(client) && !HasSeenMOTD[client])
+	if(!DisableAltBlock && !IsFakeClient(client) && !HasSeenMOTD[client])
 	{
 		char PanelURLToShow[255];
 		Format(PanelURLToShow, sizeof(PanelURLToShow), "https://sourcecbl.com/api/initiate?initSteamID=%s", ClientSteam[client]);
@@ -161,12 +164,16 @@ public void OnMapStart()
 	CloseHandle(handle);
 	
 	CreateTimer(900.0, Timer_AutoReload, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
-	CreateTimer(10.0, Timer_AutoAltCheck, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+	if(!DisableAltBlock) 
+	{
+		CreateTimer(10.0, Timer_AutoAltCheck, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+	}
 }
 
 public void OnConfigsExecuted() {
 	IsEnabled = GetConVarBool(g_hCvarEnabled);
 	CurrentGameOnly = GetConVarBool(g_hCvarCurrentGameOnly);
+	DisableAltBlock = GetConVarBool(g_hCvarDisableAlt);
 
 	if(!IsEnabled) {
 		ServerCommand("sm plugins unload sourcecbl");
@@ -278,6 +285,7 @@ public void OnConVarChange(Handle convar, const char[] oldValue, const char[] ne
 {
 	IsEnabled = GetConVarBool(g_hCvarEnabled);
 	CurrentGameOnly = GetConVarBool(g_hCvarCurrentGameOnly);
+	DisableAltBlock = GetConVarBool(g_hCvarDisableAlt);
 	
 	AssignGameIDs();
 
@@ -293,6 +301,7 @@ public void OnConVarChange(Handle convar, const char[] oldValue, const char[] ne
 public void OnClientAuthorized(int client)
 {
 	CurrentGameOnly = GetConVarBool(g_hCvarCurrentGameOnly);
+	DisableAltBlock = GetConVarBool(g_hCvarDisableAlt);
 	
 	if(!IsFakeClient(client))
 	{
