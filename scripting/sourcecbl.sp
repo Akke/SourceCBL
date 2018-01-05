@@ -22,6 +22,7 @@
 #define SPECMODE_NONE 				0
 #define SPECMODE_FIRSTPERSON 		4
 #define SPECMODE_3RDPERSON 			5
+#define VERSION						"2.0.2"
 
 #pragma dynamic 1045840
 
@@ -59,7 +60,7 @@ public Plugin myinfo =
 	name = "SourceCBL",
 	author = "SomePanns",
 	description = "Allows communities to keep hackers/cheaters away from their servers by using a global database with stored information of hackers/cheaters.",
-	version = "2.0",
+	version = VERSION,
 }
 
 public void OnPluginStart()
@@ -69,6 +70,7 @@ public void OnPluginStart()
 	g_hCvarEnabled = CreateConVar("sm_scbl_enabled", "1", "Enable or disable SourceCBL. 1 = Enabled (default), 0 = disabled.", FCVAR_NOTIFY);
 	g_hCvarCurrentGameOnly = CreateConVar("sm_scbl_current_game_only", "0", "If set to 0 (default) then cheaters banned from any Source game will be kicked. If set to 1 then only cheaters banned from the current game the server is running are kicked.", FCVAR_NOTIFY);
 	g_hCvarDisableAlt = CreateConVar("sm_scbl_disable_altcheck", "0", "0 (default) blocks all alternate account detected from marked cheaters only. 1 will allow alternate accounts of marked cheaters to connect.", FCVAR_NOTIFY);
+	CreateConVar("sm_scbl_version", VERSION, "Displays the current version of the plugin. Do not touch or change this.", FCVAR_NOTIFY);
 	
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	
